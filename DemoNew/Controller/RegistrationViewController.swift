@@ -36,7 +36,10 @@ class RegistrationViewController: UIViewController {
     }
     
     private func setupUI() {
+        view.backgroundColor = .init(hex: "#f2f2f7")
         tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         view.addSubview(tableView)
         view.addSubview(signUpButton)
         tableView.snp.makeConstraints { make in
@@ -48,7 +51,6 @@ class RegistrationViewController: UIViewController {
             make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(44)
         }
-                
     }
     
     private func setupDataSource() {

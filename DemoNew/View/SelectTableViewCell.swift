@@ -25,10 +25,12 @@ class SelectTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        backgroundColor = .clear
         // Configure the custom layer
         customLayer.cornerRadius = 8
         customLayer.borderColor = UIColor.black.cgColor
         customLayer.borderWidth = 1.0
+        customLayer.backgroundColor = UIColor.white.cgColor
         
         // Add custom layer to content view's layer
         contentView.layer.addSublayer(customLayer)
@@ -37,12 +39,11 @@ class SelectTableViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
-            make.centerY.equalToSuperview()
-            //TODO: 添加right约束
+            make.centerY.equalToSuperview()                        
         }
         selectButton.snp.makeConstraints { make in
             make.right.equalToSuperview().inset(16)
-            make.top.bottom.equalToSuperview().inset(16)
+            make.top.bottom.equalToSuperview().inset(28)
         }
     }
     
