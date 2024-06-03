@@ -1,5 +1,5 @@
 //
-//  CustomTableViewCell.swift
+//  InputTableViewCell.swift
 //  DemoNew
 //
 //  Created by 吴伟 on 6/3/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CustomTableViewCell: UITableViewCell {
+class InputTableViewCell: UITableViewCell {
     
     let customLayer = CALayer()
     

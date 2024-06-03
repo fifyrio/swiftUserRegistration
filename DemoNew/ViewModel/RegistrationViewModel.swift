@@ -17,7 +17,8 @@ class RegistrationViewModel {
     @Published var lastName: String = ""
     @Published var email: String = ""
     @Published var avatarImage: UIImage?
-    @Published var avatarBorderColor: UIColor = .clear
+    @Published var colorSelection: String = ""
+    @Published var avatarBorderColor: UIColor = .gray
     
     // Mock API method
     func submitForm() {

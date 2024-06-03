@@ -13,9 +13,10 @@ enum Section {
 }
 
 enum Item: Hashable {
+    case avatar
     case firstName
     case lastName
     case phone
     case email
-    case avatar
+    case selectColor
 }
