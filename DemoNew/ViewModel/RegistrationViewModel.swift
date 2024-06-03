@@ -22,20 +22,20 @@ class RegistrationViewModel: ObservableObject {
     @Published var avatarBorderColor: UIColor = .gray
     @Published var isButtonEnabled: Bool = false
     
+    func formatImageData() -> Data? {
+        return avatarImage?.jpegData(compressionQuality: 0.8)
+    }
+    
     // Mock API method
     func submitForm(completion: @escaping (Bool) -> Void) {
         // Simulate form submission
-        api.createUser(user: .init(firstName: firstName, lastName: lastName, phone: phoneNumber, email: email)) { error in
+        api.createUser(user: .init(firstName: firstName, lastName: lastName, phone: phoneNumber, email: email, image: formatImageData())) { error in
             guard error == nil else {
-                // Show error toast
-                //TODO: add call back
                 completion(false)
                 return
             }
-            
-            //TODO: add call back
+                        
             completion(true)
-            // Show success toast
         }
     }
 }

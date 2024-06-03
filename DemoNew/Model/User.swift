@@ -12,6 +12,7 @@ struct UserForm {
     let lastName: String
     let phone: String
     let email: String
+    let image: Data?
 }
 
 

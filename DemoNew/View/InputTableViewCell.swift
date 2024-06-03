@@ -54,6 +54,7 @@ class InputTableViewCell: UITableViewCell {
         let textField = UITextField()
         textField.placeholder = "Please input"
         textField.textAlignment = .right
+        textField.autocapitalizationType = .none
         return textField
     }()
     
