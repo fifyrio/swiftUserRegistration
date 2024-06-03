@@ -37,6 +37,7 @@ class RegistrationViewController: UIViewController {
             make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(44)
         }
+                
     }
     
     private func setupDataSource() {
@@ -73,13 +74,20 @@ class RegistrationViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.gray, for: .disabled)
         button.backgroundColor = .white
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
                 
         button.layer.cornerRadius = 8
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
         return button
+    }()
+    
+    
+    lazy var spinner: SpinnerViewController = {
+        let spinner = SpinnerViewController()
+        return spinner
     }()
 }
 
@@ -92,8 +100,19 @@ extension RegistrationViewController {
         present(picker, animated: true)
     }
     
-    @objc func buttonTapped() {
-        print("Button tapped!")
+    @objc func submitButtonTapped() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.showSpinnerView(spinner)
+        }
+        
+        viewModel.submitForm { isSuccess in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.hideSpinnerView(spinner)
+                self.showAlert(message: isSuccess ? "Sign Up Success" : "Sign Up Fail")
+            }
+        }
     }
     
     private func showColorActionSheet() {
@@ -216,6 +235,18 @@ extension RegistrationViewController {
                 // Update UI with new border color
                 self?.updateAvatarBorderColor(color)
             }
+            .store(in: &cancellables)
+        
+        viewModel.$isButtonEnabled
+                    .receive(on: RunLoop.main)
+                    .assign(to: \.isEnabled, on: signUpButton)
+                    .store(in: &cancellables)
+        
+        Publishers.CombineLatest4(viewModel.$firstName, viewModel.$lastName, viewModel.$email, viewModel.$phoneNumber)
+            .map {firstName, lastName , email, phone in
+                return !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phone.isEmpty
+            }
+            .assign(to: \.isButtonEnabled, on: self.viewModel)
             .store(in: &cancellables)
     }
     

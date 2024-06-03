@@ -11,7 +11,9 @@ import PhotosUI
 import Combine
 
 // ViewModel for the registration form
-class RegistrationViewModel {
+class RegistrationViewModel: ObservableObject {
+    let api: MockApiClient = MockApiClient()
+    
     // Properties to hold form data
     @Published var firstName: String = ""
     @Published var lastName: String = ""
@@ -20,10 +22,22 @@ class RegistrationViewModel {
     @Published var avatarImage: UIImage?
     @Published var colorSelection: String = ""
     @Published var avatarBorderColor: UIColor = .gray
+    @Published var isButtonEnabled: Bool = false
     
     // Mock API method
-    func submitForm() {
+    func submitForm(completion: @escaping (Bool) -> Void) {
         // Simulate form submission
-        print("Form submitted with: \(firstName), \(lastName), \(email), \(avatarImage?.description ?? "No Image"), \(avatarBorderColor)")
+        api.createUser(user: .init(firstName: firstName, lastName: lastName, phone: phoneNumber, email: email)) { error in
+            guard error == nil else {
+                // Show error toast
+                //TODO: add call back
+                completion(false)
+                return
+            }
+            
+            //TODO: add call back
+            completion(true)
+            // Show success toast
+        }
     }
 }
