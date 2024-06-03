@@ -16,6 +16,7 @@ class RegistrationViewModel {
     @Published var firstName: String = ""
     @Published var lastName: String = ""
     @Published var email: String = ""
+    @Published var phoneNumber: String = ""
     @Published var avatarImage: UIImage?
     @Published var colorSelection: String = ""
     @Published var avatarBorderColor: UIColor = .gray

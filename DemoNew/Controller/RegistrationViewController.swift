@@ -50,14 +50,14 @@ class RegistrationViewController: UIViewController {
                 case .avatar:
                 return self.setupAvatarCell(tableView: tableView, indexPath: indexPath, data: "Avatar")
                 case .firstName:
-                return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "First Name")
+                return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "First Name", item: item)
                 case .lastName:
-                return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "Last Name")
+                return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "Last Name", item: item)
                     
                 case .phone:
-                return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "Phone Number")
+                return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "Phone Number", item: item)
                 case .email:
-                    return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "Email")
+                    return self.setupInputCell(tableView: tableView, indexPath: indexPath, data: "Email", item: item)
                 case .selectColor:
                 return self.setupSelectCell(tableView: tableView, indexPath: indexPath, data: "Custom Avatar Color")
             }
@@ -100,7 +100,7 @@ extension RegistrationViewController {
         let colorOptions: [String: UIColor] = ["red": .red, "yellow": .yellow, "purple": .purple]
         let actionSheet = UIAlertController(title: "Select Border Color", message: nil, preferredStyle: .actionSheet)
         
-        for (colorName, color) in colorOptions {
+        for (colorName, _) in colorOptions {
             let action = UIAlertAction(title: colorName.capitalized, style: .default) { [weak self] _ in
                 self?.viewModel.colorSelection = colorName
             }
@@ -128,9 +128,34 @@ extension RegistrationViewController: PHPickerViewControllerDelegate {
 }
 
 extension RegistrationViewController {
-    private func setupInputCell(tableView: UITableView, indexPath: IndexPath, data: String) -> UITableViewCell {
+    private func setupInputCell(tableView: UITableView, indexPath: IndexPath, data: String, item: Item) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "InputTableViewCell", for: indexPath) as? InputTableViewCell {
             cell.titleLabel.text = data
+            switch item {
+            case .firstName:
+                cell.textField.textPublisher
+                    .receive(on: RunLoop.main)
+                    .assign(to: \.firstName, on: self.viewModel)
+                    .store(in: &cancellables)
+            case .lastName:
+                cell.textField.textPublisher
+                    .receive(on: RunLoop.main)
+                    .assign(to: \.lastName, on: self.viewModel)
+                    .store(in: &cancellables)
+            case .email:
+                cell.textField.textPublisher
+                    .receive(on: RunLoop.main)
+                    .assign(to: \.email, on: self.viewModel)
+                    .store(in: &cancellables)
+            case .phone:
+                cell.textField.textPublisher
+                    .receive(on: RunLoop.main)
+                    .assign(to: \.phoneNumber, on: self.viewModel)
+                    .store(in: &cancellables)
+            default:
+                break
+            }
+            cell.selectionStyle = .none
             return cell
         } else {
             return UITableViewCell.init(frame: .zero)
@@ -141,6 +166,7 @@ extension RegistrationViewController {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AvatarTableViewCell", for: indexPath) as? AvatarTableViewCell {
             cell.titleLabel.text = data
+            cell.selectionStyle = .none
             return cell
         } else {
             return UITableViewCell.init(frame: .zero)
@@ -154,6 +180,7 @@ extension RegistrationViewController {
                 guard let self = self else { return }
                 self.showColorActionSheet()
             }
+            cell.selectionStyle = .none
             return cell
         } else {
             return UITableViewCell.init(frame: .zero)
@@ -173,6 +200,10 @@ extension RegistrationViewController {
         
         viewModel.$email
             .sink { print("Email: \($0)") }
+            .store(in: &cancellables)
+        
+        viewModel.$phoneNumber
+            .sink { print("PhoneNumber: \($0)") }
             .store(in: &cancellables)
         
         viewModel.$colorSelection

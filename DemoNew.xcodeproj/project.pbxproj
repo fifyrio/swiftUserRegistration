@@ -14,6 +14,7 @@
 		4E288A632C0D58AA00533441 /* AvatarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E288A622C0D58AA00533441 /* AvatarTableViewCell.swift */; };
 		4E288A652C0D5F0900533441 /* SelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E288A642C0D5F0900533441 /* SelectTableViewCell.swift */; };
 		4E288A682C0D6B3100533441 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E288A672C0D6B3100533441 /* ColorUtils.swift */; };
+		4E288A6A2C0D886100533441 /* UITextFieldExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E288A692C0D886100533441 /* UITextFieldExt.swift */; };
 		4EE0A0ED2B4CD8EA00EB1BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE0A0EC2B4CD8EA00EB1BD7 /* AppDelegate.swift */; };
 		4EE0A0EF2B4CD8EA00EB1BD7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE0A0EE2B4CD8EA00EB1BD7 /* SceneDelegate.swift */; };
 		4EE0A0F42B4CD8EA00EB1BD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EE0A0F22B4CD8EA00EB1BD7 /* Main.storyboard */; };
@@ -52,6 +53,7 @@
 		4E288A622C0D58AA00533441 /* AvatarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarTableViewCell.swift; sourceTree = "<group>"; };
 		4E288A642C0D5F0900533441 /* SelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTableViewCell.swift; sourceTree = "<group>"; };
 		4E288A672C0D6B3100533441 /* ColorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
+		4E288A692C0D886100533441 /* UITextFieldExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExt.swift; sourceTree = "<group>"; };
 		4EE0A0E92B4CD8EA00EB1BD7 /* DemoNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EE0A0EC2B4CD8EA00EB1BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EE0A0EE2B4CD8EA00EB1BD7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				4E288A672C0D6B3100533441 /* ColorUtils.swift */,
+				4E288A692C0D886100533441 /* UITextFieldExt.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				4EE0A0ED2B4CD8EA00EB1BD7 /* AppDelegate.swift in Sources */,
 				4E288A612C0D4A3C00533441 /* InputTableViewCell.swift in Sources */,
 				4E288A5F2C0D4A1A00533441 /* Section.swift in Sources */,
+				4E288A6A2C0D886100533441 /* UITextFieldExt.swift in Sources */,
 				4EE0A0EF2B4CD8EA00EB1BD7 /* SceneDelegate.swift in Sources */,
 				4E288A5D2C0D49F000533441 /* RegistrationViewController.swift in Sources */,
 				4E288A632C0D58AA00533441 /* AvatarTableViewCell.swift in Sources */,
