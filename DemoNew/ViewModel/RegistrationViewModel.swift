@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import SnapKit
-import PhotosUI
 import Combine
 
 // ViewModel for the registration form

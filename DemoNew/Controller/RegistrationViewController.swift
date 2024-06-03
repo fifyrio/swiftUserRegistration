@@ -185,6 +185,10 @@ extension RegistrationViewController {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AvatarTableViewCell", for: indexPath) as? AvatarTableViewCell {
             cell.titleLabel.text = data
+            cell.clickAvatar = { [weak self] in
+                guard let self = self else { return }
+                self.showPicker()
+            }
             cell.selectionStyle = .none
             return cell
         } else {
@@ -237,6 +241,16 @@ extension RegistrationViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.$avatarImage
+            .sink { [weak self] selectImage in
+                // Update UI with new border color
+                guard let self = self else { return }
+                if let image = selectImage {
+                    self.updateAvatarImage(image)
+                }
+            }
+            .store(in: &cancellables)
+        
         viewModel.$isButtonEnabled
                     .receive(on: RunLoop.main)
                     .assign(to: \.isEnabled, on: signUpButton)
@@ -248,6 +262,12 @@ extension RegistrationViewController {
             }
             .assign(to: \.isButtonEnabled, on: self.viewModel)
             .store(in: &cancellables)
+    }
+    
+    private func updateAvatarImage(_ image: UIImage) {
+        guard let row = dataSource.snapshot().indexOfItem(.avatar), let section = dataSource.snapshot().indexOfSection(.main) else { return }
+        guard let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) as? AvatarTableViewCell else { return }
+        cell.updateAvatar(image)
     }
     
     private func updateAvatarBorderColor(_ color: UIColor) {

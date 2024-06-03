@@ -10,6 +10,8 @@ import SnapKit
 
 class AvatarTableViewCell: UITableViewCell {
     
+    var clickAvatar: (()->Void)?        
+    
     let customLayer = CALayer()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,13 +40,13 @@ class AvatarTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
         colorView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize.init(width: 52, height: 52))
+            make.size.equalTo(CGSize.init(width: 88, height: 88))
             make.right.equalToSuperview().inset(16)
             make.top.bottom.equalToSuperview().inset(16)
         }
         avatarImageView.snp.makeConstraints { make in
             make.center.equalTo(colorView.snp.center)
-            make.size.equalTo(CGSize.init(width: 44, height: 44))
+            make.size.equalTo(CGSize.init(width: 52, height: 52))
         }
     }
     
@@ -59,20 +61,27 @@ class AvatarTableViewCell: UITableViewCell {
         colorView.backgroundColor = UIColor.init(hex: color)
     }
     
+    func updateAvatar(_ image: UIImage) {
+        avatarImageView.image = image
+    }
+    
     func updateBorderColor(_ color: UIColor) {
         colorView.backgroundColor = color
     }
     
-    lazy var colorView: UIView = {
-        let colorView = UIView()
-        return colorView
+    lazy var colorView: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .init(hex: "#c2c2c2")
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        return button
     }()
     
     lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 22
+        imageView.layer.cornerRadius = 26
         imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .cyan
+        imageView.backgroundColor = .init(hex: "#dae8fc")
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
@@ -81,6 +90,10 @@ class AvatarTableViewCell: UITableViewCell {
         label.textColor = .black
         return label
     }()
+    
+    @objc func buttonTapped() {
+        clickAvatar?()
+    }
 }
 
 
