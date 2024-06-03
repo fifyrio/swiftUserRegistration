@@ -7,22 +7,17 @@
 
 import Foundation
 
-protocol Api {
+protocol ApiProtocol {
     func createUser(user: UserForm, completion: @escaping (Error?) -> Void)
 }
 
-final class ApiClient: Api {
-    func createUser(user: UserForm, completion: @escaping (Error?) -> Void) {
-        // reach the actual API
-    }
-}
-
-final class MockApiClient: Api {
-    private static let delay = 5
+final class ApiClient: ApiProtocol {
+    private static let delay = 3
     
+    //Mock API
     func createUser(user: UserForm, completion: @escaping (Error?) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(MockApiClient.delay)) {
-            completion(CustomError.unknown)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(ApiClient.delay)) {
+            completion(nil)
         }
     }
 }

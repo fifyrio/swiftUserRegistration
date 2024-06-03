@@ -14,8 +14,19 @@ import Combine
 class RegistrationViewController: UIViewController {
     private var tableView: UITableView!
     private var dataSource: UITableViewDiffableDataSource<Section, Item>!
-    private let viewModel = RegistrationViewModel()
+    private var viewModel: RegistrationViewModel
     private var cancellables = Set<AnyCancellable>()
+    
+    init(viewModel: RegistrationViewModel = RegistrationViewModel(api: ApiClient())) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    // 这个初始化方法用于从 Storyboard 或 XIB 初始化
+    required init?(coder: NSCoder) {                
+        self.viewModel = RegistrationViewModel(api: ApiClient())
+        super.init(coder: coder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -212,23 +223,7 @@ extension RegistrationViewController {
 }
 
 extension RegistrationViewController {
-    private func bindViewModel() {
-        viewModel.$firstName
-            .sink { print("First Name: \($0)") }
-            .store(in: &cancellables)
-        
-        viewModel.$lastName
-            .sink { print("Last Name: \($0)") }
-            .store(in: &cancellables)
-        
-        viewModel.$email
-            .sink { print("Email: \($0)") }
-            .store(in: &cancellables)
-        
-        viewModel.$phoneNumber
-            .sink { print("PhoneNumber: \($0)") }
-            .store(in: &cancellables)
-        
+    func bindViewModel() {
         viewModel.$colorSelection
             .map { return ColorUtils.color(from: $0) ?? UIColor.clear }
             .assign(to: \.avatarBorderColor, on: self.viewModel)            
@@ -236,14 +231,13 @@ extension RegistrationViewController {
         
         viewModel.$avatarBorderColor
             .sink { [weak self] color in
-                // Update UI with new border color
-                self?.updateAvatarBorderColor(color)
+                guard let self = self else { return }
+                self.updateAvatarBorderColor(color)
             }
             .store(in: &cancellables)
         
         viewModel.$avatarImage
-            .sink { [weak self] selectImage in
-                // Update UI with new border color
+            .sink { [weak self] selectImage in                
                 guard let self = self else { return }
                 if let image = selectImage {
                     self.updateAvatarImage(image)

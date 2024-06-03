@@ -10,7 +10,11 @@ import Combine
 
 // ViewModel for the registration form
 class RegistrationViewModel: ObservableObject {
-    let api: MockApiClient = MockApiClient()
+    init(api: ApiProtocol) {
+        self.api = api
+    }
+    
+    let api: ApiProtocol
     
     // Properties to hold form data
     @Published var firstName: String = ""
